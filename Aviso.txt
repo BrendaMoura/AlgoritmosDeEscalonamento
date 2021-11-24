@@ -1,0 +1,3 @@
+O tempo não está funcionando
+Não está ocorrendo a diminuição do tempo restante
+O programa está encerrando apenas quando o processo é destruído.
