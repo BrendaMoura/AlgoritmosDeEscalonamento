@@ -3,15 +3,15 @@
 Implementação na Linguagem C, utilizando ponteiros, dos algoritmos de escalonamento de
 processos.
 
-O processo contém a seguinte estrutura:\n
-• Identificador\n
-• Quantum\n
-• Tempo\n
-• Prioridade\n
-• Estado\n
+O processo contém a seguinte estrutura:<br/>
+• Identificador<br/>
+• Quantum<br/>
+• Tempo<br/>
+• Prioridade<br/>
+• Estado<br/>
 
-Algoritmos implementados:\n
-(a) Algoritmo de Escalonamento FIFO.\n
-(b) Algoritmo de Escalonamento Shortest-Job-First.\n
-(c) Algoritmo de Escalonamento Circular Round Robin.\n
-(d) Algoritmo de Escalonamento por Prioridade.\n
+Algoritmos implementados:<br/>
+(a) Algoritmo de Escalonamento FIFO.<br/>
+(b) Algoritmo de Escalonamento Shortest-Job-First.<br/>
+(c) Algoritmo de Escalonamento Circular Round Robin.<br/>
+(d) Algoritmo de Escalonamento por Prioridade.<br/>
