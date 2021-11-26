@@ -1,9 +1,9 @@
 //Brenda Cristina Dourado Moura
 //Engenharia de Software
 //Turma 2
-//MatÈria: Sistemas Operacionais
+//Mat√©ria: Sistemas Operacionais
 //Lista 2 - Primeiro tipo de escalonador
-//Escalonador do tipo Prioridade
+//Escalonador do tipo Shortest Job First
 
 #include<stdio.h>
 #include<stdlib.h>
@@ -15,10 +15,10 @@
 //1 - Apto
 //2 - Executando
 //3 - Bloqueado
-//4 - DestruÌdo
+//4 - Destru√≠do
 
 int processoInicial = -1;
-//Essa variavel verifica se o usuario j· criou o processo inicial
+//Essa variavel verifica se o usuario j√° criou o processo inicial
 
 //https://www.ti-enxame.com/pt/c/como-dividir-uma-string-em-2-strings-em-c/968225763/
 //https://www.ti-enxame.com/pt/c/como-remover-o-caractere-em-um-vazio-indice-de-uma-string-em-c/971615844/
@@ -50,7 +50,7 @@ struct registrador{
 	struct no *cauda;
 };
 
-//CÛdigo oferecido
+//C√≥digo oferecido
 int chamadaSistema(){
 	return rand()% 2;
 }
@@ -71,7 +71,7 @@ int determinarPrioridade(){
 	return (rand()% 10)+1;
 }
 
-//Torna os processos da fila aptos para a execuÁ„o
+//Torna os processos da fila aptos para a execu√ß√£o
 void tornarApto(struct registrador *processos){
 	struct no *aux = processos->cabeca;
 	while(aux){
@@ -93,7 +93,7 @@ struct no *buscarProcesso(struct no *raiz, int chave){
     return NULL;
 }
 
-//InicializaÁ„o da identificaÁ„o da fila
+//Inicializa√ß√£o da identifica√ß√£o da fila
 void inicializa(struct registrador *processos){
     processos->raiz = NULL;
 
@@ -105,12 +105,12 @@ void inicializa(struct registrador *processos){
 struct no *novoProcesso(int chave){
 	struct no *novo = (struct no*)malloc(sizeof(struct no));
 	if(novo){
-        //InicializaÁ„o referente ‡ arvore
+        //Inicializa√ß√£o referente √† arvore
         novo->pai = NULL;
         novo->primFilho = NULL;
         novo->proxIrmao = NULL;
 
-        //InicializaÁ„o referente ‡ fila
+        //Inicializa√ß√£o referente √† fila
 		novo->ant = NULL;
 		novo->prox = NULL;
 
@@ -129,7 +129,7 @@ int inserirProcesso(int px,int py, struct registrador *processos){
     struct no *pai = buscarProcesso((processos->raiz),px);
     if(!pai) return 0;
     struct no *filho = novoProcesso(py);
-    //Adiciona o pai dele na certid„o de nascimento
+    //Adiciona o pai dele na certid√£o de nascimento
     filho->pai = pai;
     struct no *p = pai->primFilho;
     if(!p)pai->primFilho = filho;
@@ -140,15 +140,15 @@ int inserirProcesso(int px,int py, struct registrador *processos){
         p->proxIrmao = filho;
     }
 
-    //Adiciona as informaÁıes da fila
+    //Adiciona as informa√ß√µes da fila
     //Organizando a fila pelo menor trabalho
     if(processos->cabeca==NULL && processos->cauda==NULL){
-        //Quando n„o tem nada da fila
+        //Quando n√£o tem nada da fila
         processos->cabeca = filho;
         processos->cauda = filho;
     }else{
          if((filho->tempo)<=(processos->cabeca->tempo)){
-            //Verifica se tem que botar na cabeÁa
+            //Verifica se tem que botar na cabe√ßa
             processos->cabeca->ant = filho;
             filho->prox = processos->cabeca;
             processos->cabeca = filho;
@@ -201,7 +201,7 @@ int quantidadeProcessos(struct no *raiz){
 //Imprimir processos
 void imprimirProcessos(struct no *raiz){
     if(raiz!=NULL){
-        printf("%d-Estado: %d, Prioridade: %d(", raiz->identificador,raiz->estado, raiz->prioridade);
+        printf("%d-Estado: %d(", raiz->identificador, raiz->estado);
         struct no *p = raiz->primFilho;
         while(p){
             imprimirProcessos(p);
@@ -224,16 +224,16 @@ void imprimirFilaPorTempo(struct registrador *processos){
 struct tm *tempoAtual(){
 	//http://linguagemc.com.br/exibindo-data-e-hora-com-time-h/
 
-	//vari·vel do tipo time_t para armazenar o tempo em segundos
+	//vari√°vel do tipo time_t para armazenar o tempo em segundos
 	struct tm *tempo;
 
-	//vari·vel do tipo time_t para armazenar o tempo em segundos
+	//vari√°vel do tipo time_t para armazenar o tempo em segundos
   	time_t segundos;
 
 	//obtendo o tempo em segundos
 	time(&segundos);
 
-	//para converter de segundos para o tempo local, utilizamos a funÁ„o localtime
+	//para converter de segundos para o tempo local, utilizamos a fun√ß√£o localtime
 	tempo = localtime(&segundos);
 
 	return tempo;
@@ -263,7 +263,7 @@ void escreveDocumento(int identificador){
 	fclose(arq);
 }
 
-//ExecuÁ„o da simulaÁ„o
+//Execu√ß√£o da simula√ß√£o
 void executando(struct registrador *processos){
 	int n, tRestante=0;
 	struct no *aux = processos->cabeca;
@@ -272,17 +272,17 @@ void executando(struct registrador *processos){
 	struct tm *tInicial, *tFinal;
 
 	while(aux){
-		//Verifica qual È o prÛximo processo apto
+		//Verifica qual √© o pr√≥ximo processo apto
 		if(aux->estado==1){
 			//Muda o estado para executando
 			aux->estado = 2;
 
 			//Pega o tempo restante de processamento
-			//T· errado
+			//T√° errado
 			tRestante = aux->tempo;
-			printf("\nEXECUTANDO SIMULACAO - PROCESSO: %d | TEMPO RESTANTE: %d\n", aux->identificador, tRestante);
+			printf("\nEXECUTANDO SIMULACAO - PROCESSO: %d  - ESTADO: %d| TEMPO RESTANTE: %d\n", aux->identificador, aux->estado, tRestante);
 
-			//Loop de executar as coisinhas
+			//Loop de executar a simula√ß√£o
 			while(1){
 				//Marca o tempo inicial
 				tInicial = tempoAtual();
@@ -301,15 +301,15 @@ void executando(struct registrador *processos){
 					tRestante = tRestante-((tFinal->tm_sec)-(tInicial->tm_sec));
                     tInicial = tFinal;
 
-
 					while(1){
+                        printf("\nEXECUTANDO SIMULACAO - PROCESSO: %d  - ESTADO: %d| TEMPO RESTANTE: %d\n", aux->identificador, aux->estado, tRestante);
 						int resultado = desbloqueio();
 						if(resultado!=2){
 							if(resultado==0){
 								//Muda o estado para apto
 								aux->estado = 1;
 							}else if(resultado==1){
-								//Muda o estado para destruÌdo
+								//Muda o estado para destru√≠do
 								aux->estado = 4;
 							}
 							break;
@@ -322,18 +322,18 @@ void executando(struct registrador *processos){
 				printf("\nDeseja imprimir o diagrama de estado (1 - SIM/ 2 - NAO):");
 				scanf("%d", &n);
 				if(n==1){
-					imprimirProcessos(processos->cabeca);
+					imprimirProcessos(processos->raiz);
 				}
 
 				//Marca o tempo final
 				tFinal = tempoAtual();
 				tRestante = tRestante-((tFinal->tm_sec)-(tInicial->tm_sec));
 
-				//verifica se j· terminou o tempo
+				//verifica se j√° terminou o tempo
                 if(tRestante<=0 || aux->estado==4){
                     break;
                 }
-                printf("\nEXECUTANDO SIMULACAO - PROCESSO: %d | TEMPO RESTANTE: %d\n", aux->identificador, tRestante);
+                printf("\nEXECUTANDO SIMULACAO - PROCESSO: %d  - ESTADO: %d| TEMPO RESTANTE: %d\n", aux->identificador, aux->estado, tRestante);
 			}
 		}
 		aux = aux->prox;
@@ -341,7 +341,7 @@ void executando(struct registrador *processos){
 }
 
 int main(){
-    //DeclaraÁ„o de vari·veis de controle
+    //Declara√ß√£o de vari√°veis de controle
 	int i=0,j=0,aux=0,n=0, pai=0,filho=0;
 	char parametro[6];
 	char p1[6],p2[6];
@@ -350,7 +350,7 @@ int main(){
 	//Identificador da parada toda
 	struct registrador processos;
 
-	//Chama a funÁ„o de inicializaÁ„o
+	//Chama a fun√ß√£o de inicializa√ß√£o
 	inicializa(&processos);
 
 	while(1){
@@ -378,7 +378,7 @@ int main(){
                     //Leitura dos processos
                     for(i=0;i<n;i++){
                         printf("Digite as informacoes do processo: ");
-                        //Recebe as informaÁıes do processo
+                        //Recebe as informa√ß√µes do processo
                         scanf("%s", parametro);
 
                         //Trata o parametro
@@ -415,7 +415,7 @@ int main(){
             }
         }
         else{
-            //Aqui vai ficar a m·gica
+            //Aqui vai ficar a m√°gica
             printf("1 - Iniciar simulacao\n");
             printf("2 - Imprimir arvore\n");
             printf("3 - Contar a quantidade de processos abertos\n");
@@ -435,7 +435,7 @@ int main(){
                     printf("1 - Apto\n");
                     printf("2 - Executando\n");
                     printf("3 - Bloqueado\n");
-                    printf("4 - DestruÌdo\n");
+                    printf("4 - Destru√≠do\n");
                     printf("\nPROCESSOS EXISTENTES: ");
                     imprimirProcessos((processos.raiz));
                     printf("\n\n");
